@@ -29,7 +29,7 @@ a = parser.parse_args()
 
 # dim = 256  # target dimensions, 
 # do_crop = False # if true, resizes shortest edge to target dimeensions and crops other edge. If false, does non-uniform resize
-do_crom = a.crop
+do_crop = a.crop
 canny_thresh1 = 100
 canny_thresh2 = 200
 
