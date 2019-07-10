@@ -21,17 +21,21 @@ parser.add_argument("--input_dir", required=True, help="path to folder containin
 parser.add_argument("--output_dir", required=True, help="output path")
 # parser.add_argument("--operation", required=True, choices=["grayscale", "resize", "blank", "combine", "edges"])
 # parser.add_argument("--workers", type=int, default=1, help="number of workers")
-parser.add_argument("--crop", action="store_true", help="Resizes shortest edge to target dimensions and crops other edge. If false, does non-uniform resize")
+parser.add_argument("--crop", action="store_true", help="resizes shortest edge to target dimensions and crops other edge. If false, does non-uniform resize")
 # resize
 parser.add_argument("--pad", action="store_true", help="pad instead of crop for resize operation")
 parser.add_argument("--size", type=int, default=256, help="size to use for resize operation")
+# threshold 
+parser.add_argument("--canny_threshold_1", type=int, default=100, help="canny 1st threshold")
+parser.add_argument("--canny_threshold_2", type=int, default=200, help="canny 2nd threshold")
+
 a = parser.parse_args()
 
 # dim = 256  # target dimensions, 
 # do_crop = False # if true, resizes shortest edge to target dimeensions and crops other edge. If false, does non-uniform resize
 do_crop = a.crop
-canny_thresh1 = 100
-canny_thresh2 = 200
+canny_thresh1 = a.canny_threshold_1
+canny_thresh2 = a.canny_threshold_2
 
 # root_path = '../../../data'
 in_path = os.path.dirname(a.input_dir)
