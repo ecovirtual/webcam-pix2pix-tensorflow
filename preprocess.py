@@ -19,8 +19,8 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--input_dir", required=True, help="path to folder containing images")
 parser.add_argument("--output_dir", required=True, help="output path")
-parser.add_argument("--operation", required=True, choices=["grayscale", "resize", "blank", "combine", "edges"])
-parser.add_argument("--workers", type=int, default=1, help="number of workers")
+# parser.add_argument("--operation", required=True, choices=["grayscale", "resize", "blank", "combine", "edges"])
+# parser.add_argument("--workers", type=int, default=1, help="number of workers")
 parser.add_argument("--crop", action="store_true", help="Resizes shortest edge to target dimensions and crops other edge. If false, does non-uniform resize")
 # resize
 parser.add_argument("--pad", action="store_true", help="pad instead of crop for resize operation")
