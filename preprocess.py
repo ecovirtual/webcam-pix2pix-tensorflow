@@ -15,24 +15,35 @@ import os
 import cv2
 import PIL.Image
 
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--input_dir", required=True, help="path to folder containing images")
+parser.add_argument("--output_dir", required=True, help="output path")
+parser.add_argument("--operation", required=True, choices=["grayscale", "resize", "blank", "combine", "edges"])
+parser.add_argument("--workers", type=int, default=1, help="number of workers")
+parser.add_argument("--crop", action="store_true", help="Resizes shortest edge to target dimensions and crops other edge. If false, does non-uniform resize")
+# resize
+parser.add_argument("--pad", action="store_true", help="pad instead of crop for resize operation")
+parser.add_argument("--size", type=int, default=256, help="size to use for resize operation")
+a = parser.parse_args()
 
-dim = 256  # target dimensions, 
-do_crop = False # if true, resizes shortest edge to target dimensions and crops other edge. If false, does non-uniform resize
-
+# dim = 256  # target dimensions, 
+# do_crop = False # if true, resizes shortest edge to target dimeensions and crops other edge. If false, does non-uniform resize
+do_crom = a.crop
 canny_thresh1 = 100
 canny_thresh2 = 200
 
-root_path = '../../../data'
-in_path = os.path.join(root_path, 'GoogleArt_wikimedia_raw')
-out_path = os.path.join(root_path, 'GoogleArt_wikimedia')
+# root_path = '../../../data'
+in_path = os.path.dirname(a.input_dir)
+out_path = os.path.dirname(a.output_dir)
 
 
 #########################################
-out_path += '_' + str(dim) + '_p2p_canny'
+out_path += '_' + str(a.size) + '_p2p_canny'
 if do_crop:
     out_path += '_crop'
 
-out_shape = (dim, dim)
+out_shape = (a.size, a.size)
 
 if os.path.exists(out_path) == False:
     os.makedirs(out_path)
@@ -70,13 +81,13 @@ for i,path in enumerate(paths):
     if do_crop:
         resize_shape = list(out_shape)
         if im.width < im.height:
-            resize_shape[1] = int(round(float(im.height) / im.width * dim))
+            resize_shape[1] = int(round(float(im.height) / im.width * a.size))
         else:
-            resize_shape[0] = int(round(float(im.width) / im.height * dim))
+            resize_shape[0] = int(round(float(im.width) / im.height * a.size))
         im = im.resize(resize_shape, PIL.Image.BICUBIC)
         hw = int(im.width / 2)
         hh = int(im.height / 2)
-        hd = int(dim/2)
+        hd = int(a.size/2)
         area = (hw-hd, hh-hd, hw+hd, hh+hd)
         im = im.crop(area)            
             
