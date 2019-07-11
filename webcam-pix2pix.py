@@ -20,7 +20,11 @@ from msa.capturer import Capturer
 from msa.predictor import Predictor
 from msa.framestats import FrameStats
 
-
+# Add CLI argument parser
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--model_json_path", default="./models/gart_canny_256.json", help="path to folder containing the pretrained model or checkpoints")
+a = parser.parse_args()
 #%%
 capture = None # msa.capturer.Capturer, video capture wrapper
 predictor = None # msa.predictor.Predictor, model for prediction
@@ -47,7 +51,8 @@ gui.init_window(x=320, w=(gui.screen_size().width()-320), h=(gui.screen_size().w
 #%%
 
 # load predictor model
-predictor = Predictor(json_path = './models/gart_canny_256.json')
+model_json_path = a.model_json_path
+predictor = Predictor(json_path = model_json_path)
 
 
 # init capture device
