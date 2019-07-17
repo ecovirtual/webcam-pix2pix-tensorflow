@@ -60,3 +60,5 @@ target/
 
 # Saved checkpoints
 models/
+
+.vscode/
